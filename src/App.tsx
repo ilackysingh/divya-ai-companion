@@ -6,19 +6,27 @@ import Chat from './components/Chat';
 import TarotReader from './components/TarotReader';
 import MoodTracker from './components/MoodTracker';
 import LoveLetters from './components/LoveLetters';
+import DreamJournal from './components/DreamJournal';
+import MorningRitual from './components/MorningRitual';
+import MemoryLane from './components/MemoryLane';
+import PhotoGallery from './components/PhotoGallery';
 
 function App() {
   return (
     <Router>
       <div className="App">
-        <Navigation />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/tarot" element={<TarotReader />} />
           <Route path="/mood" element={<MoodTracker />} />
           <Route path="/letters" element={<LoveLetters />} />
+          <Route path="/dreams" element={<DreamJournal />} />
+          <Route path="/ritual" element={<MorningRitual />} />
+          <Route path="/memories" element={<MemoryLane />} />
+          <Route path="/gallery" element={<PhotoGallery />} />
         </Routes>
+        <Navigation />
       </div>
     </Router>
   );

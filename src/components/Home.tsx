@@ -1,14 +1,14 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { MessageCircle, Moon, Heart, Smile, BookOpen, Sparkles, Gift, Cake, PartyPopper } from 'lucide-react';
+import { MessageCircle, Moon, Heart, Smile, BookOpen, Sparkles, Gift, Cake, PartyPopper, PenTool, Coffee, Camera, Image } from 'lucide-react';
 
 const Home: React.FC = () => {
   const features = [
     {
       icon: MessageCircle,
-      title: 'Chat with AI',
-      description: 'Have meaningful conversations with an AI that knows you',
+      title: 'Chat Companion',
+      description: 'Have meaningful conversations with your personalized companion',
       path: '/chat',
       color: 'from-purple-500 to-pink-500'
     },
@@ -32,6 +32,34 @@ const Home: React.FC = () => {
       description: 'Receive heartfelt letters written just for you',
       path: '/letters',
       color: 'from-red-500 to-orange-500'
+    },
+    {
+      icon: PenTool,
+      title: 'Dream Journal',
+      description: 'Record and explore your dreams with mystical interpretations',
+      path: '/dreams',
+      color: 'from-blue-500 to-indigo-500'
+    },
+    {
+      icon: Coffee,
+      title: 'Morning Ritual',
+      description: 'Start your day with personalized affirmations and intentions',
+      path: '/ritual',
+      color: 'from-orange-500 to-yellow-500'
+    },
+    {
+      icon: Camera,
+      title: 'Memory Lane',
+      description: 'Create and revisit beautiful moments and memories',
+      path: '/memories',
+      color: 'from-green-500 to-teal-500'
+    },
+    {
+      icon: Image,
+      title: 'Photo Gallery',
+      description: 'Browse all your beautiful photos and stickers',
+      path: '/gallery',
+      color: 'from-teal-500 to-blue-500'
     }
   ];
 
@@ -128,7 +156,7 @@ const Home: React.FC = () => {
             transition={{ delay: 0.6 }}
             className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed mb-8"
           >
-            Your personalized AI companion is here to understand, support, and celebrate you.
+            Your personalized companion is here to understand, support, and celebrate you.
             Every feature is designed with your unique personality in mind.
           </motion.p>
 
@@ -188,7 +216,7 @@ const Home: React.FC = () => {
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: isBirthday ? 1.4 : 0.8, duration: 0.8 }}
-        className="max-w-6xl mx-auto px-4 pb-20 relative z-10"
+        className="max-w-7xl mx-auto px-4 pb-20 relative z-10"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((feature, index) => {
@@ -271,14 +299,14 @@ const Home: React.FC = () => {
             className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 flex items-center gap-2"
           >
             <MessageCircle className="w-5 h-5" />
-            {isBirthday ? 'Chat with AI' : 'Start Chatting'}
+            {isBirthday ? 'Chat with Companion' : 'Start Chatting'}
           </Link>
           <Link 
-            to="/tarot" 
+            to="/gallery" 
             className="bg-white text-purple-600 border-2 border-purple-500 px-8 py-4 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 flex items-center gap-2"
           >
-            <BookOpen className="w-5 h-5" />
-            {isBirthday ? 'Birthday Reading' : 'Daily Reading'}
+            <Image className="w-5 h-5" />
+            {isBirthday ? 'View Photos' : 'Photo Gallery'}
           </Link>
         </div>
       </motion.div>
