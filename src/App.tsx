@@ -16,7 +16,7 @@ function App() {
     <Router>
       <div className="App">
         <Navigation />
-        <div className="lg:pt-16">
+        <div className="lg:pt-12">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/chat" element={<Chat />} />
