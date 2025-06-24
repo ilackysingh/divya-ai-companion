@@ -76,7 +76,7 @@ const Chat: React.FC = () => {
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 text-white shadow-lg sticky top-0 z-10"
+        className="bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 text-white shadow-lg"
       >
         <div className="max-w-4xl mx-auto px-6 py-6">
           <div className="flex items-center gap-6">
