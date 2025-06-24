@@ -1,24 +1,26 @@
 export interface ChatMessage {
   id: string;
-  role: 'user' | 'assistant';
   content: string;
+  role: 'user' | 'assistant';
   timestamp: Date;
 }
 
 export interface TarotCard {
+  id?: string;
   name: string;
   description: string;
   meaning: string;
-  reversed?: boolean;
+  reversed: boolean;
 }
 
 export interface MoodEntry {
   id: string;
-  date: Date;
-  mood: 'happy' | 'sad' | 'excited' | 'calm' | 'anxious' | 'loved' | 'confused';
-  intensity: number; // 1-10
+  mood: string;
+  intensity: number;
   notes: string;
   activities: string[];
+  timestamp: Date;
+  aiInsight?: string;
 }
 
 export interface LoveLetter {
@@ -26,7 +28,7 @@ export interface LoveLetter {
   title: string;
   content: string;
   date: Date;
-  category: 'romantic' | 'friendship' | 'support' | 'funny';
+  category: 'romantic' | 'friendship' | 'encouragement' | 'gratitude';
   isRead: boolean;
 }
 

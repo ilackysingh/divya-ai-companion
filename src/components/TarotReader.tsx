@@ -1,212 +1,179 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { BookOpen, Moon, Sparkles, RefreshCw } from 'lucide-react';
-import { TarotCard } from '../types';
+import { BookOpen, Sparkles, Moon, Star, Heart } from 'lucide-react';
 import { getDailyTarot } from '../services/openai';
+import { TarotCard } from '../types';
 
 const TarotReader: React.FC = () => {
   const [cards, setCards] = useState<TarotCard[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasReadToday, setHasReadToday] = useState(false);
 
-  const handleDrawCards = async () => {
+  const handleDailyReading = async () => {
     setIsLoading(true);
     try {
-      const drawnCards = await getDailyTarot();
-      setCards(drawnCards);
+      const dailyCards = await getDailyTarot();
+      setCards(dailyCards);
       setHasReadToday(true);
     } catch (error) {
-      console.error('Error drawing cards:', error);
+      console.error('Error getting tarot reading:', error);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleNewReading = () => {
-    setCards([]);
-    setHasReadToday(false);
+  const cardVariants = {
+    hidden: { opacity: 0, y: 50, rotateY: 180 },
+    visible: { opacity: 1, y: 0, rotateY: 0 },
+    hover: { scale: 1.05, y: -10 }
   };
 
   return (
-    <div className="tarot-container">
-      {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="tarot-header"
-      >
-        <div className="tarot-header-content">
-          <BookOpen className="tarot-header-icon" />
-          <div>
-            <h2>Daily Tarot Reading</h2>
-            <p>Let the mystical energies guide your day, Divya ✨</p>
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-indigo-50">
+      <div className="max-w-6xl mx-auto px-4 py-8">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center mb-12"
+        >
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+              <BookOpen className="w-8 h-8 text-white" />
+            </div>
+            <div>
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                Daily Tarot Reading
+              </h1>
+              <p className="text-gray-600 mt-2">Mystical insights for your day, Divya 🌙</p>
+            </div>
           </div>
-        </div>
-      </motion.div>
+        </motion.div>
 
-      {/* Main Content */}
-      <div className="tarot-content">
-        {cards.length === 0 ? (
+        {/* Reading Button */}
+        {!hasReadToday && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="tarot-intro"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center mb-12"
           >
-            <div className="tarot-intro-content">
-              <motion.div
-                animate={{ 
-                  rotate: [0, 10, -10, 0],
-                  scale: [1, 1.1, 1]
-                }}
-                transition={{ 
-                  duration: 2,
-                  repeat: Infinity,
-                  repeatType: "reverse"
-                }}
-                className="tarot-intro-icon"
-              >
-                <Moon className="intro-moon" />
-                <Sparkles className="intro-sparkles" />
-              </motion.div>
-              
-              <h3>Ready for Your Daily Reading?</h3>
-              <p>
-                The cards are waiting to reveal what the universe has in store for you today, Divya. 
-                Take a deep breath, focus on your question or intention, and let's discover the guidance 
-                that awaits you. 🌙
-              </p>
-              
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={handleDrawCards}
-                disabled={isLoading}
-                className="draw-cards-btn"
-              >
-                {isLoading ? (
-                  <>
-                    <RefreshCw className="loading-icon" />
-                    Drawing Cards...
-                  </>
-                ) : (
-                  <>
-                    <BookOpen className="btn-icon" />
-                    Draw Three Cards
-                  </>
-                )}
-              </motion.button>
-            </div>
-          </motion.div>
-        ) : (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="tarot-reading"
-          >
-            {/* Reading Header */}
-            <div className="reading-header">
-              <h3>Your Daily Reading</h3>
-              <p>Here's what the cards have revealed for you today, Divya 💜</p>
-            </div>
-
-            {/* Cards Display */}
-            <div className="cards-container">
-              <AnimatePresence>
-                {cards.map((card, index) => (
-                  <motion.div
-                    key={card.name}
-                    initial={{ opacity: 0, y: 50, rotateY: 180 }}
-                    animate={{ opacity: 1, y: 0, rotateY: 0 }}
-                    transition={{ 
-                      delay: index * 0.3,
-                      duration: 0.8,
-                      type: "spring",
-                      stiffness: 100
-                    }}
-                    whileHover={{ scale: 1.05, y: -10 }}
-                    className="tarot-card"
-                  >
-                    <div className="card-header">
-                      <h4>{card.name}</h4>
-                      {card.reversed && (
-                        <span className="reversed-badge">Reversed</span>
-                      )}
-                    </div>
-                    
-                    <div className="card-content">
-                      <div className="card-description">
-                        <strong>Description:</strong> {card.description}
-                      </div>
-                      <div className="card-meaning">
-                        <strong>For You Today:</strong> {card.meaning}
-                      </div>
-                    </div>
-                    
-                    <div className="card-footer">
-                      <Sparkles className="card-sparkle" />
-                    </div>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-            </div>
-
-            {/* Reading Summary */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1 }}
-              className="reading-summary"
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleDailyReading}
+              disabled={isLoading}
+              className={`px-8 py-4 rounded-2xl font-semibold text-lg transition-all duration-300 flex items-center gap-3 mx-auto ${
+                isLoading
+                  ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                  : 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg hover:shadow-xl'
+              }`}
             >
-              <div className="summary-content">
-                <Moon className="summary-icon" />
-                <div>
-                  <h4>Today's Energy</h4>
-                  <p>
-                    The cards suggest a day filled with intuition, hope, and meaningful choices. 
-                    Trust your instincts, Divya. Your emotions are your compass, and your heart 
-                    knows the way. Remember, you have the power to create the reality you desire. ✨
-                  </p>
-                </div>
-              </div>
-            </motion.div>
+              {isLoading ? (
+                <>
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  Reading the cards...
+                </>
+              ) : (
+                <>
+                  <Sparkles className="w-6 h-6" />
+                  Get Your Daily Reading
+                </>
+              )}
+            </motion.button>
+          </motion.div>
+        )}
 
-            {/* Action Buttons */}
+        {/* Cards Display */}
+        <AnimatePresence>
+          {cards.length > 0 && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 1.2 }}
-              className="reading-actions"
+              exit={{ opacity: 0 }}
+              className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12"
             >
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={handleNewReading}
-                className="new-reading-btn"
-              >
-                <RefreshCw className="btn-icon" />
-                New Reading
-              </motion.button>
+              {cards.map((card, index) => (
+                <motion.div
+                  key={card.id || index}
+                  variants={cardVariants}
+                  initial="hidden"
+                  animate="visible"
+                  transition={{ delay: index * 0.2, duration: 0.6 }}
+                  whileHover="hover"
+                  className="group"
+                >
+                  <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 h-full">
+                    <div className="text-center mb-6">
+                      <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <Moon className="w-8 h-8 text-white" />
+                      </div>
+                      <h3 className="text-xl font-bold text-gray-800 mb-2">{card.name}</h3>
+                      <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium ${
+                        card.reversed 
+                          ? 'bg-orange-100 text-orange-700' 
+                          : 'bg-green-100 text-green-700'
+                      }`}>
+                        {card.reversed ? 'Reversed' : 'Upright'}
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-4">
+                      <div>
+                        <h4 className="font-semibold text-gray-700 mb-2">Description</h4>
+                        <p className="text-gray-600 text-sm leading-relaxed">{card.description}</p>
+                      </div>
+                      
+                      <div>
+                        <h4 className="font-semibold text-gray-700 mb-2">Your Message</h4>
+                        <p className="text-gray-800 text-sm leading-relaxed italic">{card.meaning}</p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
             </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Daily Inspiration */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8 }}
+          className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100"
+        >
+          <div className="flex items-center gap-4 mb-6">
+            <Star className="w-8 h-8 text-yellow-500" />
+            <h3 className="text-2xl font-bold text-gray-800">Daily Inspiration</h3>
+          </div>
+          <blockquote className="text-lg text-gray-700 italic leading-relaxed">
+            "The moon understands your heart, Divya. Just as it waxes and wanes, so do our emotions. 
+            But remember, even in the darkest night, the moon still shines. Your strength, your intuition, 
+            and your beautiful complexity are your greatest gifts. Trust the journey you're on." ✨
+          </blockquote>
+        </motion.div>
+
+        {/* Reset Button */}
+        {hasReadToday && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center mt-8"
+          >
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => {
+                setCards([]);
+                setHasReadToday(false);
+              }}
+              className="px-6 py-3 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-colors duration-300"
+            >
+              New Reading
+            </motion.button>
           </motion.div>
         )}
       </div>
-
-      {/* Daily Affirmation */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.5 }}
-        className="daily-affirmation"
-      >
-        <div className="affirmation-content">
-          <Sparkles className="affirmation-icon" />
-          <blockquote>
-            "Today, I choose to trust the journey. Every card drawn, every step taken, 
-            brings me closer to the person I'm meant to become. I am worthy of love, 
-            guidance, and all the beautiful things life has to offer." 🌙
-          </blockquote>
-        </div>
-      </motion.div>
     </div>
   );
 };

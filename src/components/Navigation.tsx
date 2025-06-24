@@ -19,48 +19,54 @@ const Navigation: React.FC = () => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.8 }}
-      className="navigation"
+      className="bg-white/95 backdrop-blur-md border-b border-gray-200 sticky top-0 z-50"
     >
-      <div className="nav-container">
-        <motion.div
-          whileHover={{ scale: 1.05 }}
-          className="nav-brand"
-        >
-          <Link to="/">
-            <Moon className="nav-logo" />
-            <span>Divya's AI</span>
-          </Link>
-        </motion.div>
-        
-        <div className="nav-links">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            const isActive = location.pathname === item.path;
-            
-            return (
-              <motion.div
-                key={item.path}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Link
-                  to={item.path}
-                  className={`nav-link ${isActive ? 'active' : ''}`}
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="flex justify-between items-center py-4">
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            className="flex items-center"
+          >
+            <Link to="/" className="flex items-center gap-3 text-xl font-bold text-gray-800 hover:text-purple-600 transition-colors">
+              <Moon className="w-6 h-6 text-purple-500" />
+              <span>Divya's AI</span>
+            </Link>
+          </motion.div>
+          
+          <div className="flex gap-2">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = location.pathname === item.path;
+              
+              return (
+                <motion.div
+                  key={item.path}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  <Icon className="nav-icon" />
-                  <span>{item.label}</span>
-                  {isActive && (
-                    <motion.div
-                      layoutId="activeTab"
-                      className="active-indicator"
-                      initial={false}
-                      transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                    />
-                  )}
-                </Link>
-              </motion.div>
-            );
-          })}
+                  <Link
+                    to={item.path}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-xl font-medium transition-all duration-300 relative ${
+                      isActive 
+                        ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg' 
+                        : 'text-gray-600 hover:bg-purple-50 hover:text-purple-600'
+                    }`}
+                  >
+                    <Icon className="w-5 h-5" />
+                    <span className="hidden sm:inline">{item.label}</span>
+                    {isActive && (
+                      <motion.div
+                        layoutId="activeTab"
+                        className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-white rounded-full"
+                        initial={false}
+                        transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                      />
+                    )}
+                  </Link>
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </motion.nav>
