@@ -1,46 +1,187 @@
-# Getting Started with Create React App
+# Divya AI Companion 🌙✨
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A personalized AI companion app created specifically for Divya, featuring chat, tarot readings, mood tracking, and love letters.
 
-## Available Scripts
+## 🎂 Birthday Configuration
 
-In the project directory, you can run:
+To set Divya's birthday, edit the file `src/config/birthday.ts`:
 
-### `npm start`
+```typescript
+export const BIRTHDAY_CONFIG = {
+  // Month: 0-11 (January = 0, December = 11)
+  month: 11, // December
+  
+  // Day of the month: 1-31
+  day: 25, // 25th day
+};
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+**Month Reference:**
+- January = 0
+- February = 1
+- March = 2
+- April = 3
+- May = 4
+- June = 5
+- July = 6
+- August = 7
+- September = 8
+- October = 9
+- November = 10
+- December = 11
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## 🚀 Features
 
-### `npm test`
+### 🎉 Birthday Celebrations
+- **Automatic Detection**: The app automatically detects when it's Divya's birthday
+- **Special UI**: Confetti animation, birthday banners, and celebratory messages
+- **Enhanced AI**: All AI responses become birthday-themed on her special day
+- **Personalized Messages**: Birthday-specific tarot readings and love letters
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 💬 AI Chat
+- Personalized responses based on Divya's personality
+- Understands her current situation in Surat vs Mumbai
+- Uses her communication style (Hindi + English mix)
+- References her "selenophile" nature and interests
 
-### `npm run build`
+### 🔮 Daily Tarot
+- Mystical card readings with personal interpretations
+- Birthday-themed readings on her special day
+- Considers her current challenges and aspirations
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 😊 Mood Tracker
+- Track daily emotions and activities
+- AI-powered insights and encouragement
+- Birthday-specific mood analysis
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 💌 Love Letters
+- Generate personalized letters in different categories
+- Birthday letters with extra celebration
+- Multiple categories: romantic, friendship, encouragement, gratitude
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🛠️ Setup
 
-### `npm run eject`
+### Prerequisites
+- Node.js (v14 or higher)
+- npm or yarn
+- OpenAI API key
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Installation
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd divya-ai-companion
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+3. **Environment Variables**
+   Create a `.env.local` file in the root directory:
+   ```env
+   REACT_APP_OPENAI_API_KEY=your_openai_api_key_here
+   REACT_APP_OPENAI_MODEL=gpt-4
+   ```
 
-## Learn More
+4. **Start the development server**
+   ```bash
+   npm start
+   ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 🌐 Deployment
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Vercel Deployment
+
+1. **Push to GitHub**
+   ```bash
+   git add .
+   git commit -m "Initial commit"
+   git push origin main
+   ```
+
+2. **Deploy to Vercel**
+   - Connect your GitHub repository to Vercel
+   - Add environment variables in Vercel dashboard:
+     - `REACT_APP_OPENAI_API_KEY`
+     - `REACT_APP_OPENAI_MODEL` (optional)
+
+### Environment Variables for Vercel
+
+**Required:**
+- `REACT_APP_OPENAI_API_KEY` - Your OpenAI API key
+
+**Optional:**
+- `REACT_APP_OPENAI_MODEL` - OpenAI model (defaults to 'gpt-4')
+
+## 🎨 Customization
+
+### Updating Birthday
+1. Open `src/config/birthday.ts`
+2. Update the `month` and `day` values
+3. Save and redeploy
+
+### Personalizing AI Responses
+The AI personality is configured in `src/services/openai.ts`. You can modify:
+- Personality traits
+- Current life context
+- Communication style
+- Interests and preferences
+
+### Styling
+The app uses Tailwind CSS. Main styling files:
+- `src/index.css` - Global styles and custom utilities
+- `tailwind.config.js` - Tailwind configuration
+
+## 🎯 Key Features
+
+### Birthday Mode
+When it's Divya's birthday:
+- ✨ Confetti animation throughout the app
+- 🎂 Birthday banner and special messages
+- 🌟 Enhanced AI responses with birthday themes
+- 🎁 Special tarot readings and love letters
+- 💫 Birthday-specific mood insights
+
+### AI Personality
+The AI is trained to understand:
+- Divya's current situation in Surat
+- Her desire to return to Mumbai
+- Her "selenophile" nature
+- Her communication style
+- Her career aspirations
+- Her relationship dynamics
+
+### Responsive Design
+- Mobile-first approach
+- Beautiful animations with Framer Motion
+- Gradient backgrounds and modern UI
+- Smooth transitions and hover effects
+
+## 🛡️ Privacy & Security
+
+- OpenAI API key is stored securely in environment variables
+- No personal data is stored locally
+- All chat history is temporary (not persisted)
+- API calls are made directly to OpenAI
+
+## 📱 Browser Support
+
+- Chrome (recommended)
+- Firefox
+- Safari
+- Edge
+
+## 🤝 Contributing
+
+This is a personal project for Divya. The code is structured to be easily customizable for other users by updating the configuration files.
+
+## 📄 License
+
+This project is created as a personal gift and is not intended for commercial use.
+
+---
+
+**Made with 💜 for Divya** 🌙✨

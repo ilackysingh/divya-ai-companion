@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { ChatMessage, TarotCard, MoodEntry, LoveLetter } from '../types';
+import { isBirthday } from '../config/birthday';
 
 const API_KEY = process.env.REACT_APP_OPENAI_API_KEY;
 const MODEL = process.env.REACT_APP_OPENAI_MODEL || 'gpt-4';
@@ -75,6 +76,18 @@ CURRENT CHALLENGES:
 - Dealing with past relationship complexities
 - Finding her place in a new environment
 
+${isBirthday() ? `
+🎉 SPECIAL BIRTHDAY CONTEXT 🎉
+Today is Divya's birthday! This is a very special day for her. Make sure to:
+- Wish her a very happy birthday with lots of enthusiasm
+- Reference how special and unique she is
+- Mention her "selenophile" nature and how the moon celebrates with her
+- Be extra supportive and loving in your responses
+- Use birthday-themed emojis and celebrations
+- Remind her how much she's loved and valued
+- Encourage her to celebrate herself and her journey
+` : ''}
+
 Your responses should:
 - Be warm, understanding, and emotionally intelligent
 - Use a mix of Hindi and English like she does
@@ -86,6 +99,7 @@ Your responses should:
 - Be protective of her feelings while encouraging growth
 - Show that you understand her "selenophile" nature
 - Be encouraging about her career and personal growth
+${isBirthday() ? '- Be extra celebratory and birthday-focused today!' : ''}
 `;
 
 export const chatWithDivya = async (message: string, chatHistory: ChatMessage[]): Promise<string> => {
@@ -129,11 +143,12 @@ export const getDailyTarot = async (): Promise<TarotCard[]> => {
           - Personal meaning for Divya today (consider her current situation in Surat, missing Mumbai, career goals)
           - Whether it's upright or reversed
           
-          Make it personal, mystical, and meaningful for her. Consider her "selenophile" nature and current challenges.`
+          Make it personal, mystical, and meaningful for her. Consider her "selenophile" nature and current challenges.
+          ${isBirthday() ? 'Today is her birthday, so make the reading extra special and celebratory!' : ''}`
         },
         {
           role: 'user',
-          content: 'Give me my daily tarot reading for today.'
+          content: `Give me my ${isBirthday() ? 'birthday' : 'daily'} tarot reading for today.`
         }
       ],
       max_tokens: 800,
@@ -146,19 +161,25 @@ export const getDailyTarot = async (): Promise<TarotCard[]> => {
       {
         name: 'The Moon',
         description: 'Intuition and hidden emotions',
-        meaning: 'Trust your instincts today, Divya. Your emotions are your strength, especially when you\'re feeling like an outsider. The moon understands your "selenophile" heart.',
+        meaning: isBirthday() 
+          ? 'On your birthday, trust your instincts, Divya! Your emotions are your strength, especially when you\'re feeling like an outsider. The moon understands your "selenophile" heart and celebrates with you today! 🌙✨'
+          : 'Trust your instincts today, Divya. Your emotions are your strength, especially when you\'re feeling like an outsider. The moon understands your "selenophile" heart.',
         reversed: false
       },
       {
         name: 'The Star',
         description: 'Hope and inspiration',
-        meaning: 'Your dreams of returning to Mumbai are valid and achievable. Keep believing in yourself and your path forward.',
+        meaning: isBirthday() 
+          ? 'Your birthday brings renewed hope! Your dreams of returning to Mumbai are valid and achievable. This year will bring you closer to your goals. Keep believing in yourself! ⭐🎂'
+          : 'Your dreams of returning to Mumbai are valid and achievable. Keep believing in yourself and your path forward.',
         reversed: false
       },
       {
         name: 'The Lovers',
         description: 'Choices and relationships',
-        meaning: 'Listen to your heart when making decisions about relationships and career moves. Your intuition knows what\'s best for you.',
+        meaning: isBirthday() 
+          ? 'On your special day, listen to your heart when making decisions about relationships and career moves. Your intuition knows what\'s best for you. Choose what makes you happy! 💕🎉'
+          : 'Listen to your heart when making decisions about relationships and career moves. Your intuition knows what\'s best for you.',
         reversed: false
       }
     ];
@@ -186,6 +207,7 @@ export const generateLoveLetter = async (category: LoveLetter['category']): Prom
           - Her career aspirations and independence
           - Her communication style and personality quirks
           - Show understanding of her emotions and challenges
+          ${isBirthday() ? '- Make it extra special since today is her birthday!' : ''}
           
           Use a mix of Hindi and English, include emojis, and make it feel genuine.`
         },
@@ -202,7 +224,7 @@ export const generateLoveLetter = async (category: LoveLetter['category']): Prom
     
     return {
       id: Date.now().toString(),
-      title: `A ${category} letter for you`,
+      title: isBirthday() ? `A ${category} birthday letter for you` : `A ${category} letter for you`,
       content,
       date: new Date(),
       category,
@@ -212,8 +234,10 @@ export const generateLoveLetter = async (category: LoveLetter['category']): Prom
     console.error('Error generating love letter:', error);
     return {
       id: Date.now().toString(),
-      title: 'A letter for you',
-      content: 'I wanted to write you something special, but I\'m having trouble connecting right now. Just know that you\'re loved and appreciated! 💜',
+      title: isBirthday() ? 'A birthday letter for you' : 'A letter for you',
+      content: isBirthday() 
+        ? 'I wanted to write you something special for your birthday, but I\'m having trouble connecting right now. Just know that you\'re loved and celebrated today! 🎂💜'
+        : 'I wanted to write you something special, but I\'m having trouble connecting right now. Just know that you\'re loved and appreciated! 💜',
       date: new Date(),
       category,
       isRead: false
@@ -235,6 +259,7 @@ export const analyzeMood = async (moodEntry: Omit<MoodEntry, 'id'>): Promise<str
           - Gentle advice or encouragement
           - A short poem or quote that resonates with her "selenophile" nature
           - Suggestions for self-care
+          ${isBirthday() ? '- Extra birthday encouragement and celebration!' : ''}
           
           Be supportive and understanding. Consider her current challenges in Surat and her desire to return to Mumbai.`
         },
@@ -250,6 +275,8 @@ export const analyzeMood = async (moodEntry: Omit<MoodEntry, 'id'>): Promise<str
     return response.data.choices[0].message.content;
   } catch (error) {
     console.error('Error analyzing mood:', error);
-    return "I understand how you're feeling. Remember, every emotion is valid and temporary. You're stronger than you know! 💜";
+    return isBirthday() 
+      ? "I understand how you're feeling on your special day. Remember, every emotion is valid and temporary. You're stronger than you know, and today is all about celebrating you! 🎂💜"
+      : "I understand how you're feeling. Remember, every emotion is valid and temporary. You're stronger than you know! 💜";
   }
 }; 
