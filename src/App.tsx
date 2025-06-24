@@ -15,18 +15,20 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/chat" element={<Chat />} />
-          <Route path="/tarot" element={<TarotReader />} />
-          <Route path="/mood" element={<MoodTracker />} />
-          <Route path="/letters" element={<LoveLetters />} />
-          <Route path="/dreams" element={<DreamJournal />} />
-          <Route path="/ritual" element={<MorningRitual />} />
-          <Route path="/memories" element={<MemoryLane />} />
-          <Route path="/gallery" element={<PhotoGallery />} />
-        </Routes>
         <Navigation />
+        <div className="lg:pt-16">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/chat" element={<Chat />} />
+            <Route path="/tarot" element={<TarotReader />} />
+            <Route path="/mood" element={<MoodTracker />} />
+            <Route path="/letters" element={<LoveLetters />} />
+            <Route path="/dreams" element={<DreamJournal />} />
+            <Route path="/ritual" element={<MorningRitual />} />
+            <Route path="/memories" element={<MemoryLane />} />
+            <Route path="/gallery" element={<PhotoGallery />} />
+          </Routes>
+        </div>
       </div>
     </Router>
   );

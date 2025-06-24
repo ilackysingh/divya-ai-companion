@@ -359,12 +359,12 @@ const PhotoGallery: React.FC = () => {
                       >
                         <div className="relative aspect-square rounded-2xl overflow-hidden bg-gray-100 shadow-lg border border-gray-200">
                           {photo.type === 'video' ? (
-                            <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
+                            <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center group cursor-pointer" onClick={() => openPhoto(photo, photos.indexOf(photo))}>
                               <div className="text-center">
-                                <div className="w-16 h-16 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-2">
+                                <div className="w-16 h-16 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform duration-200">
                                   <div className="w-0 h-0 border-l-[12px] border-l-white border-t-[8px] border-t-transparent border-b-[8px] border-b-transparent ml-1"></div>
                                 </div>
-                                <p className="text-xs text-gray-600">Video</p>
+                                <p className="text-xs text-gray-600">Click to play video</p>
                               </div>
                             </div>
                           ) : (
@@ -454,15 +454,18 @@ const PhotoGallery: React.FC = () => {
               {/* Image */}
               <div className="relative">
                 {selectedPhoto.type === 'video' ? (
-                  <div className="w-full h-96 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
-                    <div className="text-center">
-                      <div className="w-24 h-24 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <div className="w-0 h-0 border-l-[20px] border-l-white border-t-[12px] border-t-transparent border-b-[12px] border-b-transparent ml-2"></div>
-                      </div>
-                      <p className="text-lg text-gray-600">Video Preview</p>
-                      <p className="text-sm text-gray-500 mt-2">{selectedPhoto.filename}</p>
-                    </div>
-                  </div>
+                  <video
+                    src={selectedPhoto.src}
+                    controls
+                    autoPlay
+                    className="w-full h-auto max-h-[70vh] object-contain"
+                    onError={(e) => {
+                      console.error('Video playback error:', e);
+                    }}
+                  >
+                    <source src={selectedPhoto.src} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
                 ) : (
                   <img
                     src={selectedPhoto.src}
